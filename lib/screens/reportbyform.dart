@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:questionnaire_flutter/models/form.dart';
 import 'package:questionnaire_flutter/providers/formProvider.dart';
 
+import '../widgets/errorDialog.dart';
+
 
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
@@ -49,7 +51,8 @@ class _ReportByFormScreenState extends State<ReportByFormScreen> {
                   ? Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     )
-                  : Formres())
+                  : snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
+                  :Formres())
       
     );
   }

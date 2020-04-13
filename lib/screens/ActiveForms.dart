@@ -6,6 +6,8 @@ import 'package:questionnaire_flutter/models/profile.dart';
 import 'package:questionnaire_flutter/widgets/drawer.dart';
 import 'package:questionnaire_flutter/widgets/form_item.dart';
 
+import '../widgets/errorDialog.dart';
+
 
 class ActiveFormsSceen extends StatefulWidget {
   static final routeName = "/active";
@@ -27,7 +29,8 @@ class _ActiveFormsSceenState extends State<ActiveFormsSceen> {
                   ? Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     )
-                  : ActiveForms(),
+                  : snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
+                  :ActiveForms(),
             ));
   }
 }

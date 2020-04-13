@@ -3,6 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:questionnaire_flutter/providers/formProvider.dart';
 
+import '../widgets/errorDialog.dart';
+
 class FormQuestionsScreen extends StatefulWidget {
   static const routeName = "/formQuestions";
   final int formId;
@@ -46,7 +48,8 @@ class _FormQuestionsScreenState extends State<FormQuestionsScreen> {
               ? Scaffold(
             body: Center(child: CircularProgressIndicator()),
           )
-              : FormQuestions(formId: widget.formId,),
+              : snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
+              :FormQuestions(formId: widget.formId,),
         )
     );
   }
