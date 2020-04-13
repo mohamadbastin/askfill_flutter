@@ -4,6 +4,8 @@ import 'package:questionnaire_flutter/models/form.dart';
 import 'package:questionnaire_flutter/providers/formProvider.dart';
 import 'package:questionnaire_flutter/widgets/question_item.dart';
 
+import '../widgets/errorDialog.dart';
+
 class ChooseQuesScreen extends StatelessWidget {
   static final String routeName = '/byques';
   @override
@@ -21,9 +23,9 @@ class ChooseQuesScreen extends StatelessWidget {
                     ? Scaffold(
                         body: Center(child: CircularProgressIndicator()),
                       )
-                    :
+                    :snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
                     // Container()
-                    FormQuestionss(form:form)));
+                    :FormQuestionss(form:form)));
   }
 }
 

@@ -6,6 +6,8 @@ import 'package:questionnaire_flutter/models/profile.dart';
 import 'package:questionnaire_flutter/widgets/drawer.dart';
 import 'package:questionnaire_flutter/widgets/myform_item.dart';
 
+import '../widgets/errorDialog.dart';
+
 
 
 class ChooseFormsSceen extends StatefulWidget {
@@ -28,7 +30,8 @@ class _ChooseFormsSceenState extends State<ChooseFormsSceen> {
                   ? Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     )
-                  : MyForms(),
+                  : snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
+                  :MyForms(),
             ));
   }
 }

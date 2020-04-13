@@ -5,7 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:questionnaire_flutter/models/form.dart';
 import 'package:questionnaire_flutter/models/profile.dart';
 import 'package:questionnaire_flutter/main.dart';
+import 'package:questionnaire_flutter/widgets/errorDialog.dart';
 
+
+String servermsg = "خطا در برقراری ارتباط با سرور!";
 List<myForm> myFormsList = [];
 List<myForm> activeFormsList = [];
 List<myForm> mymyFormsList = [];

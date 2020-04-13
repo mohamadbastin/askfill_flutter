@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:questionnaire_flutter/models/form.dart';
 import 'package:questionnaire_flutter/providers/formProvider.dart';
 
+import '../widgets/errorDialog.dart';
+
 class ReportByQuesScreen extends StatefulWidget {
   static final String routeName = '/repbyq';
   @override
@@ -53,7 +55,8 @@ class _ReportByQuesScreenState extends State<ReportByQuesScreen> {
                   ? Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     )
-                  : QuesRes()),
+                  : snapshot.hasError? ErrorDialog(message: servermsg, ctx: context)
+                  :QuesRes()),
     );
   }
 }

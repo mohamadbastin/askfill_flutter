@@ -7,6 +7,9 @@ import 'package:questionnaire_flutter/widgets/drawer.dart';
 import 'package:questionnaire_flutter/widgets/form_item.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../widgets/errorDialog.dart';
+
+
 class RecentFormsScreen extends StatefulWidget {
   static final routeName = "/recent";
 
@@ -29,7 +32,8 @@ class _RecentFormsScreenState extends State<RecentFormsScreen> {
                   ? Scaffold(
                       body: Center(child: CircularProgressIndicator()),
                     )
-                  : RecentForms(),
+                  : snapshot.hasError ? ErrorDialog(message: servermsg, ctx: context)
+                  : RecentForms()
             ));
   }
 }
@@ -56,7 +60,7 @@ class _RecentFormsState extends State<RecentForms> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
 
-    var time = Time(3, 11, 0);
+    var time = Time(3, 28, 0);
     var androidPlatformChannelSpecifics =
     AndroidNotificationDetails('repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
