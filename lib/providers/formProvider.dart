@@ -390,7 +390,7 @@ class FormProvider with ChangeNotifier {
     if (date==DateTime.now().toString().substring(0,10)){
       date = "all";
     }
-    print(date==DateTime.now().toString().substring(0,10));
+    // print(date==DateTime.now().toString().substring(0,10));
     final response = await http.post(
         host + "/form/participant/answered-form/$qid/$ppid",
         body: json.encode({
@@ -415,18 +415,17 @@ class FormProvider with ChangeNotifier {
   }
 
 
-  Future<void> fetchFormQuery(int qid, DateTime date) async {
+  Future<void> fetchFormQuery(int qid, String date) async {
     // print("formId" + formId.toString());
-    if (date==DateTime.now()){
-      
+    if (date==DateTime.now().toString().substring(0,10)){
+      date = "all";
     }
-    print(date);
-    final response = await http.get(
-        host + "/form/participant/answered-form/$qid/",
-        // body: json.encode({
-        //   // 'ppid': ppid.toString(),
-        //   "date": date.toString()
-        // }),
+    final response = await http.post(
+        host + "/form/answered-forms/$qid",
+        body: json.encode({
+          // 'ppid': ppid.toString(),
+          "date": date.toString()
+        }),
         headers: {
           "Accept": "application/json",
           'Content-Type': 'application/json',
@@ -440,7 +439,7 @@ class FormProvider with ChangeNotifier {
     byquesquery = extractedData;
     notifyListeners();
     // print(extractedData);
-    print("sdfbjsb;snd;bns");
+    print("anbaskjbgksbglasfg");
     print(byquesquery);
   }
 
