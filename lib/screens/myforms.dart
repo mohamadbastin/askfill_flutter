@@ -50,6 +50,7 @@ class _MyFormsState extends State<MyForms> {
 
   @override
   Widget build(BuildContext context) {
+    final formProvider = Provider.of<FormProvider>(context, listen: false);
     return Scaffold(
       // drawer: MainDrawer(),
         appBar: AppBar(
@@ -88,7 +89,7 @@ class _MyFormsState extends State<MyForms> {
                     ),
                   ),
                   onDismissed: (dir) async {
-//                    await profile.removeParticipate(activeFormsList[index].id);
+                    await formProvider.removeMyForm(mymyFormsList[index].id);
                   },
                 child: MyFormItem(form: mymyFormsList[index],)
               );

@@ -469,6 +469,7 @@ class FormProvider with ChangeNotifier {
   Future<void> removeMyForm(int formId) async {
     final response = await http.get("$host/form/delete/$formId",
         headers: {
+          "Accept": "application/json",
           'Content-Type': 'application/json',
           "Authorization": "Token " + authtoken.toString(),
         });

@@ -5,6 +5,7 @@ import 'package:questionnaire_flutter/providers/formProvider.dart';
 import 'package:questionnaire_flutter/models/profile.dart';
 import 'package:questionnaire_flutter/widgets/drawer.dart';
 import 'package:questionnaire_flutter/widgets/form_item.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class RecentFormsScreen extends StatefulWidget {
   static final routeName = "/recent";
@@ -14,6 +15,7 @@ class RecentFormsScreen extends StatefulWidget {
 }
 
 class _RecentFormsScreenState extends State<RecentFormsScreen> {
+
   @override
   Widget build(BuildContext context) {
     final form = Provider.of<FormProvider>(context, listen: false);
@@ -40,9 +42,46 @@ class RecentForms extends StatefulWidget {
 class _RecentFormsState extends State<RecentForms> {
   List<myForm> ic;
 
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
   @override
   void initState() {
+    // TODO: implement initState
+// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+    var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+    var initializationSettingsIOS = IOSInitializationSettings();
+    var initializationSettings = InitializationSettings(
+        initializationSettingsAndroid, initializationSettingsIOS);
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: selectNotification);
+
+    var time = Time(3, 11, 0);
+    var androidPlatformChannelSpecifics =
+    AndroidNotificationDetails('repeatDailyAtTime channel id',
+        'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
+    var iOSPlatformChannelSpecifics =
+    IOSNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+    flutterLocalNotificationsPlugin.showDailyAtTime(
+        0,
+        'show daily title',
+        'Daily notification shown at approximately}',
+        time,
+        platformChannelSpecifics);
     super.initState();
+  }
+
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RecentForms()),
+    );
   }
 
   @override
