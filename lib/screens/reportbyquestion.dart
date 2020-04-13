@@ -38,7 +38,7 @@ class _ReportByQuesScreenState extends State<ReportByQuesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(byquesquery.isEmpty ? "Answers" : byquesquery[0]["participant"]['name'].toString()),
+        title: Text("Answers"),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.calendar_today),onPressed: (){
             _selectDate(context);
