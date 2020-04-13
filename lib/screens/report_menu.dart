@@ -26,7 +26,7 @@ class ReportMenuScreen extends StatelessWidget {
       body: ListView(children: [
         _drawerListTile("By Form", "/chooseform", context, 'f'),
         Divider(),
-        _drawerListTile("By Question", "/chooseform", context, 'q'),
+        _drawerListTile("By Participant", "/chooseform", context, 'q'),
 
       ]),
       

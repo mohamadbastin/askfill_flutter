@@ -385,17 +385,24 @@ class FormProvider with ChangeNotifier {
     print(response.body);
   }
 
-  Future<void> fetchQuestionQuery(int qid, int ppid, DateTime date) async {
+  Future<void> fetchQuestionQuery(int qid, int ppid, String date) async {
     // print("formId" + formId.toString());
-    if (date == DateTime.now()) {}
-    print(date);
-    final response = await http.post(host + "/repbyq/$qid",
-        body: json.encode({'ppid': ppid.toString(), "date": date.toString()}),
+    if (date==DateTime.now().toString().substring(0,10)){
+      date = "all";
+    }
+    print(date==DateTime.now().toString().substring(0,10));
+    final response = await http.post(
+        host + "/form/participant/answered-form/$qid/$ppid",
+        body: json.encode({
+          // 'ppid': ppid.toString(),
+          "date": date.toString()
+        }),
         headers: {
           "Accept": "application/json",
           'Content-Type': 'application/json',
           "Authorization": "Token " + authtoken.toString(),
-        });
+        }
+    );
     print(response.body);
     final extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
@@ -405,6 +412,58 @@ class FormProvider with ChangeNotifier {
     // print(extractedData);
     print("sdfbjsb;snd;bns");
     print(byquesquery);
+  }
+
+
+  Future<void> fetchFormQuery(int qid, DateTime date) async {
+    // print("formId" + formId.toString());
+    if (date==DateTime.now()){
+      
+    }
+    print(date);
+    final response = await http.get(
+        host + "/form/participant/answered-form/$qid/",
+        // body: json.encode({
+        //   // 'ppid': ppid.toString(),
+        //   "date": date.toString()
+        // }),
+        headers: {
+          "Accept": "application/json",
+          'Content-Type': 'application/json',
+          "Authorization": "Token " + authtoken.toString(),
+        }
+    );
+    print(response.body);
+    final extractedData = List<Map<String, dynamic>>.from(
+        jsonDecode(utf8.decode(response.bodyBytes)));
+    // _formQuestions = extractedData;
+    byquesquery = extractedData;
+    notifyListeners();
+    // print(extractedData);
+    print("sdfbjsb;snd;bns");
+    print(byquesquery);
+  }
+
+
+  Future<void> fetchFormParts(int formId) async {
+    print("formId" + formId.toString());
+    final response = await http.get(
+        host + "/form/participants/$formId",
+        headers: {
+          "Accept": "application/json",
+          'Content-Type': 'application/json',
+          "Authorization": "Token " + authtoken.toString(),
+        }
+    );
+    print(response.body);
+    final extractedData = List<Map<String, dynamic>>.from(
+        jsonDecode(utf8.decode(response.bodyBytes)));
+    _formQuestions = extractedData;
+    formQuestions = extractedData;
+    notifyListeners();
+    print(extractedData);
+    print("sdfbjsb;snd;bns");
+    print(formQuestions);
   }
 
   Future<void> removeMyForm(int formId) async {

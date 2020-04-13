@@ -198,31 +198,20 @@ class _FormQuestionsState extends State<FormQuestions> {
                                 activeColor: Colors.green,
                               ),
                               itemCount: formQuestions[index]["question"]["choice"].length,
-                            ) : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  formQuestions[index]["question"]["start_text"],
-                                ),
-                                Slider(
-                                  value: _formAnswers[index]["answer"],
-                                  min: 0,
-                                  max: 100,
-                                  divisions: 10,
-                                  label: '${_formAnswers[index]["answer"]}',
-                                  onChanged: (value) {
-                                    setState(
-                                          () {
+                            ) : Slider(
+                              value: _formAnswers[index]["answer"],
+                              min: 0,
+                              max: 100,
+                              divisions: 10,
+                              label: '${_formAnswers[index]["answer"]}',
+                              onChanged: (value) {
+                                setState(
+                                      () {
                                         _formAnswers[index]["answer"] = value;
-                                      },
-                                    );
                                   },
-                                ),
-                                Text(
-                                  formQuestions[index]["question"]["end_text"],
-                                ),
-                              ],
-                            )
+                                );
+                              },
+                            ),
                           )
                         ],
                       ),
@@ -242,11 +231,27 @@ class _FormQuestionsState extends State<FormQuestions> {
                         topRight: Radius.elliptical(100, 20))),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 onPressed: () async {
+                  showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+                elevation: 10,
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(10.0),
+                // ),
+                child: SizedBox(
+              height: 30,
+              width: 30,
+              child: LinearProgressIndicator(),
+            ));
+          });
 
                   print("in pressed");
                   print(widget.formId);
 
+
                   formProvider.submitFormAnswers(_formAnswers, widget.formId).then((response) {
+                    Navigator.pop(context);
                     _scaffoldKey.currentState.showSnackBar(
                       SnackBar(
                         content: Text(
@@ -254,13 +259,14 @@ class _FormQuestionsState extends State<FormQuestions> {
                           textAlign: TextAlign.center,
                         ),
                         elevation: 5,
-                        duration: Duration(seconds: 2),
+                        duration: Duration(seconds: 50),
                         backgroundColor: Colors.green,
                         action: SnackBarAction(
                           label: "Dismiss",
                           textColor: Colors.red,
                           onPressed: () {
                             _scaffoldKey.currentState.removeCurrentSnackBar();
+                            Navigator.popAndPushNamed(context, '/recent');
                           },
                         ),
 
@@ -272,6 +278,7 @@ class _FormQuestionsState extends State<FormQuestions> {
                         ),
                       )
                     );
+                    // Navigator.popAndPushNamed(context, '/recent');
                   });
                 },
                 child: Padding(
