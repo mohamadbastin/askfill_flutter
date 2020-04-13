@@ -15,7 +15,6 @@ class RecentFormsScreen extends StatefulWidget {
 }
 
 class _RecentFormsScreenState extends State<RecentFormsScreen> {
-
   @override
   Widget build(BuildContext context) {
     final form = Provider.of<FormProvider>(context, listen: false);
@@ -56,7 +55,7 @@ class _RecentFormsState extends State<RecentForms> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
 
-    var time = Time(3, 11, 0);
+    var time = Time(3, 47, 0);
     var androidPlatformChannelSpecifics =
     AndroidNotificationDetails('repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
