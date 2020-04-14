@@ -464,6 +464,7 @@ class _CreateFormScreenState extends State<CreateFormScreen> {
                                               child: StatefulBuilder(
                                                     builder: (BuildContext context, StateSetter setState) {
                                               return Container(
+                                                height: _questions.isNotEmpty ? mediaSize.height * 0.8 : mediaSize.height * 0.3,
                                                 width: double.infinity,
                                                 child: _questions.isNotEmpty ? ReorderableListView(
                                                  header: Container(
@@ -600,7 +601,17 @@ class _CreateFormScreenState extends State<CreateFormScreen> {
                                                    }).toList(),
                                                   // itemCount: _questions.length,
                                                 ) : Center(
-                                                  child: Icon(FontAwesomeIcons.boxOpen),
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                                    children: <Widget>[
+                                                      Icon(FontAwesomeIcons.boxOpen),
+                                                      SizedBox(height: 15.0,),
+                                                      Text(
+                                                        "No Records Found!"
+                                                      )
+                                                    ],
+                                                  )
                                                 ),
                                               );}),
                                             );

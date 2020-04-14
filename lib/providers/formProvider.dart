@@ -468,7 +468,7 @@ class FormProvider with ChangeNotifier {
     print(formQuestions);
   }
 
-  Future<void> removeMyForm(int formId) async {
+  Future<bool> removeMyForm(int formId) async {
     final response = await http.get("$host/form/delete/$formId",
         headers: {
           "Accept": "application/json",
@@ -476,6 +476,6 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         });
     print("removing participating");
-    if (json.decode(response.body)["msg"] == "ok") {return "yes";} else {return "no";}
+    if (json.decode(response.body)["msg"] == "ok") {return true;} else {return false;}
   }
 }

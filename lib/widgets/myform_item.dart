@@ -14,7 +14,7 @@ class MyFormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.all(Radius.circular(15.0)),
-      splashColor: Colors.deepPurple,
+      splashColor: Colors.redAccent,
       onTap: () => {
         Navigator.pushNamed(context, '/form', arguments: form)
       },

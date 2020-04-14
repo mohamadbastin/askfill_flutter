@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="questionnaire_flutter"
+        android:label="AskFill"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

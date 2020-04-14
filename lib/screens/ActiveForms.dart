@@ -50,6 +50,34 @@ class _ActiveFormsState extends State<ActiveForms> {
     super.initState();
   }
 
+  Future<bool> _showConfirmationDialog(BuildContext context, String action) {
+    return showDialog<bool>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Are you sure you wish to $action this item?"),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Delete', style: TextStyle(color: Colors.white70)),
+              color: Colors.red,
+              onPressed: () {
+                Navigator.pop(context, true); // showDialog() returns true
+              },
+            ),
+            FlatButton(
+              child: const Text('Cancel', style: TextStyle(color: Colors.white70),),
+              color: Colors.grey,
+              onPressed: () {
+                Navigator.pop(context, false); // showDialog() returns false
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final profile = Provider.of<Profile>(context, listen: false);
@@ -91,6 +119,9 @@ class _ActiveFormsState extends State<ActiveForms> {
                 ),
                 direction: DismissDirection.startToEnd,
                 child: FormItem(form: activeFormsList[index],),
+                confirmDismiss: (DismissDirection direction) async {
+                  return _showConfirmationDialog(context, "delete");
+                },
                 onDismissed: (dir) async {
                   await profile.removeParticipate(activeFormsList[index].id);
               },

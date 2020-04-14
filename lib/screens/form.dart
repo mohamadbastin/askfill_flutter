@@ -22,6 +22,7 @@ class _FormScreenState extends State<FormScreen> {
   Widget build(BuildContext context) {
     final myForm form = ModalRoute.of(context).settings.arguments;
     final FocusNode passf = new FocusNode();
+    final mediaSize = MediaQuery.of(context).size;
 
     void _participate() async {
       showDialog(
@@ -53,20 +54,24 @@ class _FormScreenState extends State<FormScreen> {
           builder: (context) {
             return Dialog(
                 elevation: 10,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(
+                  Radius.circular(10.0)
+                )),
                 // shape: RoundedRectangleBorder(
                 //   borderRadius: BorderRadius.circular(10.0),
                 // ),
-                child: SizedBox(
-              height: 80,
-              width: 30,
-              child: Column(
-                children: <Widget>[
-                  Text("password is wrong!"),
-                  SizedBox(height: 15,),
-                  RaisedButton(onPressed: ()=>Navigator.pop(context), child: Text("ok"),)
-                ],
-              ),
-            ));
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                  height: mediaSize.height * 0.2,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text("Password is Incorrect!"),
+                      SizedBox(height: 15,),
+                      RaisedButton(onPressed: ()=>Navigator.pop(context), child: Text("ok"),)
+                    ],
+                  ),
+                ));
           });
       }
     }
@@ -189,37 +194,6 @@ class _FormScreenState extends State<FormScreen> {
                                                   )
                                                 ],
                                               ),
-// <<<<<<< HEAD
-//                                                 FittedBox(
-//                                                   fit: BoxFit.fill,
-//                                                   child: Container(
-//                                                     // height: 200,
-//                                                     width:
-//                                                         MediaQuery.of(context)
-//                                                                 .size
-//                                                                 .width -
-//                                                             158,
-//                                                     child: Container(
-//                                                       height: 100,
-//                                                       child:
-//                                                           SingleChildScrollView(
-//                                                         // height: 200,
-//                                                         child: Directionality(
-//                                                           // TODO
-//                                                           textDirection:
-//                                                               TextDirection.rtl,
-//                                                           child: Text(
-//                                                             form.description,
-//                                                             //  textDirection:,
-
-//                                                             style: TextStyle(
-//                                                                 color: Colors
-//                                                                     .white,
-//                                                                 fontSize: 15),
-//                                                           ),
-//                                                         ),
-//                                                       ),
-// =======
                                             ],
                                           ),
                                           Column(
@@ -301,10 +275,15 @@ class _FormScreenState extends State<FormScreen> {
                                               onChanged: (value) =>
                                                   setState(() {}),
                                               controller: pass,
+                                              onSubmitted: (value) {
+                                                pass.text.isEmpty && form.is_private
+                                                    ? null
+                                                    : _participate();
+                                              },
                                               decoration: InputDecoration(
                                                   prefixIcon:
                                                       Icon(Icons.lock_outline),
-                                                  hintText: "password"))
+                                                  labelText: "Password"))
                                           : Container(),
                                       SizedBox(
                                         height: 30.0,
