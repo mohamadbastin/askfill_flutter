@@ -43,10 +43,13 @@ class RecentForms extends StatefulWidget {
   _RecentFormsState createState() => _RecentFormsState();
 }
 
-class _RecentFormsState extends State<RecentForms> {
+class _RecentFormsState extends State<RecentForms> with TickerProviderStateMixin {
   List<myForm> ic;
 
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+  AnimationController controller;
+  Animation<double> animation;
 
   @override
   void initState() {
@@ -60,7 +63,7 @@ class _RecentFormsState extends State<RecentForms> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: selectNotification);
 
-    var time = Time(3, 28, 0);
+    var time = Time(13, 34, 0);
     var androidPlatformChannelSpecifics =
     AndroidNotificationDetails('repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
@@ -76,6 +79,21 @@ class _RecentFormsState extends State<RecentForms> {
         time,
         platformChannelSpecifics);
     super.initState();
+
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn);
+
+    /*animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        controller.forward();
+      }
+    });*/
+
+    controller.forward();
+
   }
 
   Future selectNotification(String payload) async {
@@ -101,7 +119,14 @@ class _RecentFormsState extends State<RecentForms> {
           margin: EdgeInsets.all(5.0),
           child: ListView.builder(
             itemBuilder: (context, index) {
-              return FormItem(form: myFormsList[index],);
+              return Container(
+//                color: Colors.white,
+                child: FadeTransition(
+                  opacity: animation,
+                  alwaysIncludeSemantics: true,
+                  child: FormItem(form: myFormsList[index],)
+                ),
+              );
             },
             itemCount: myFormsList.length,
           ),

@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onSelectNotification: selectNotification);
 
 
-    var time = Time(3, 51, 0);
+    var time = Time(3, 57, 0);
     var androidPlatformChannelSpecifics =
     AndroidNotificationDetails('repeatDailyAtTime channel id',
         'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
@@ -136,13 +136,6 @@ class _MyHomePageState extends State<MyHomePage> {
         'show daily title',
         'Daily notification shown at approximately}',
         time,
-        platformChannelSpecifics);
-
-    flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'show daily title',
-        'Daily notification shown at approximately}',
-        Time(3, 52, 0),
         platformChannelSpecifics);
     super.initState();
   }
