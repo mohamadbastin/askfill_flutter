@@ -50,13 +50,13 @@ class MainDrawer extends StatelessWidget {
             AppBar(
               title: Text("AskFill"),
               centerTitle: true,
-              leading: IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _openSettingsModal(context);
-                },
-              ),
+//              leading: IconButton(
+//                icon: Icon(Icons.settings),
+//                onPressed: () {
+//                  Navigator.of(context).pop();
+//                  _openSettingsModal(context);
+//                },
+//              ),
               // actions: <Widget>[
               //   IconButton(icon: Icon(Icons.notifications), onPressed: null)
               // ],
