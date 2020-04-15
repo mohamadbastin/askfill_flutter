@@ -6,7 +6,6 @@ import 'package:questionnaire_flutter/models/profile.dart';
 import 'package:questionnaire_flutter/widgets/drawer.dart';
 import 'package:questionnaire_flutter/widgets/form_item.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../widgets/errorDialog.dart';
 
 class RecentFormsScreen extends StatefulWidget {

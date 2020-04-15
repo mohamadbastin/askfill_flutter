@@ -90,10 +90,10 @@ class MainDrawer extends StatelessWidget {
                               child: ClipOval(
                                 child: FadeInImage(
                                     placeholder: AssetImage(
-                                      'assets/images/a.png',
+                                      'assets/images/ff.png',
                                     ),
                                     image: AssetImage(
-                                      'assets/images/a.png',
+                                      'assets/images/ff.png',
                                     )),
                               ),
                             ),

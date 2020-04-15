@@ -32,7 +32,7 @@ class MyFormItem extends StatelessWidget {
                           topLeft: Radius.circular(15),
                           topRight: Radius.circular(15)),
                       child: Image.asset(
-                        'assets/images/a.png',
+                        'assets/images/ff.png',
                         fit: BoxFit.cover,
                         height: 150,
                         width: double.infinity,
@@ -166,7 +166,7 @@ class ChooseFormItem extends StatelessWidget {
                   topLeft: Radius.circular(15),
                   topRight: Radius.circular(15)),
               child: Image.asset(
-                'assets/images/a.png',
+                'assets/images/ff.png',
                 fit: BoxFit.cover,
                 height: 150,
                 width: double.infinity,
