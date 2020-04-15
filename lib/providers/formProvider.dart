@@ -36,25 +36,25 @@ class FormProvider with ChangeNotifier {
   }
 
   Future<void> fetchAndSetmyForms() async {
-    print(authtoken);
+    // // print(authtoken);
     // String token = await Provider.of<Profile>(context, listen: false).token;
-    // print ("asfg");
+    // // print ("asfg");
     var response = await http.get(host + "/form/list/", headers: {
       "Accept": "application/json",
       'Content-Type': 'application/json',
       "Authorization": "Token " + authtoken.toString(),
     });
 
-    // print(response.body);
+    // // print(response.body);
 
     var extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
 
-    // print(extractedData);
+    // // print(extractedData);
 
     final List<myForm> extractedList = [];
-    // print(extractedData.length);
-    // print(2);
+    // // print(extractedData.length);
+    // // print(2);
 
     extractedData.forEach((form) {
       var i = form['author'];
@@ -65,17 +65,17 @@ class FormProvider with ChangeNotifier {
           email: i['email'],
           picture: i['picture']);
 
-      // print(3);
+      // // print(3);
 
       List<int> times = [];
-      // print(form['time']);
+      // // print(form['time']);
       for (int j = 0; j < form['time'].length; j++) {
-        // print();
+        // // print();
         times.add(int.parse(form['time'][j]['hour']));
       }
-      // print(4);
-      print(form['name']);
-      // print(times.length);
+      // // print(4);
+      // // print(form['name']);
+      // // print(times.length);
 
       extractedList.add(myForm(
           id: form['id'],
@@ -89,31 +89,31 @@ class FormProvider with ChangeNotifier {
           estimated_time: form['estimated_time'],
           duration: form['duration_days'],
           times: times));
-      // print(MediaQuery.of(context));
+      // // print(MediaQuery.of(context));
     });
     _myForms = extractedList;
     myFormsList = extractedList;
-    // print(_myForms);
-    // print(_myForms.length);
+    // // print(_myForms);
+    // // print(_myForms.length);
     notifyListeners();
   }
 
   Future<void> fetchFormQuestions(int formId) async {
-    print("formId" + formId.toString());
+    // print("formId" + formId.toString());
     final response = await http.get(host + "/form/questions/$formId", headers: {
       "Accept": "application/json",
       'Content-Type': 'application/json',
       "Authorization": "Token " + authtoken.toString(),
     });
-    print(response.body);
+    // print(response.body);
     final extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
     _formQuestions = extractedData;
     formQuestions = extractedData;
     notifyListeners();
-    print(extractedData);
-    print("sdfbjsb;snd;bns");
-    print(formQuestions);
+    // print(extractedData);
+    // print("sdfbjsb;snd;bns");
+    // print(formQuestions);
   }
 
   myForm findById(int id) {
@@ -124,72 +124,9 @@ class FormProvider with ChangeNotifier {
 
   Future<void> fetchAndSetActiveForms() async {
     // String token = await Provider.of<Profile>(context, listen: false).token;
-    // print ("asfg");
+    // // print ("asfg");
     // String formid = fid.toString();
     var response = await http.get(host + "/answered-form/", headers: {
-      "Accept": "application/json",
-      'Content-Type': 'application/json',
-      "Authorization": "Token " + authtoken.toString(),
-    });
-
-    print(response.body);
-
-    var extractedData = List<Map<String, dynamic>>.from(
-        jsonDecode(utf8.decode(response.bodyBytes)));
-
-    // print(extractedData);
-
-    final List<myForm> extractedList = [];
-    // print(extractedData.length);
-    // print(2);
-
-    extractedData.forEach((form) {
-      var i = form['author'];
-      Profile tmp_profile = new Profile(
-          id: i['id'],
-          name: i['name'],
-          phone: i['phone'],
-          email: i['email'],
-          picture: i['picture']);
-
-      // print(3);
-
-      List<int> times = [];
-      // print(form['time']);
-      for (int j = 0; j < form['time'].length; j++) {
-        // print();
-        times.add(int.parse(form['time'][j]['hour']));
-      }
-      // print(4);
-      print(form['name']);
-      // print(times.length);
-
-      extractedList.add(myForm(
-          id: form['id'],
-          name: form['name'],
-          author: tmp_profile,
-          description: form['description'],
-          is_active: form['is_active'],
-          is_private: form['is_private'],
-          is_repeated: form['is_repeated'],
-          created: form['created'],
-          estimated_time: form['estimated_time'],
-          duration: form['duration_days'],
-          times: times));
-      // print(MediaQuery.of(context));
-    });
-    // _myForms = extractedList;
-    activeFormsList = extractedList;
-    // print(_myForms);
-    // print(_myForms.length);
-    notifyListeners();
-  }
-
-  Future<void> fetchAndSetmymyForms() async {
-    // String token = await Provider.of<Profile>(context, listen: false).token;
-    // print ("asfg");
-    // String formid = fid.toString();
-    var response = await http.get(host + "/user/created-forms/", headers: {
       "Accept": "application/json",
       'Content-Type': 'application/json',
       "Authorization": "Token " + authtoken.toString(),
@@ -200,11 +137,11 @@ class FormProvider with ChangeNotifier {
     var extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
 
-    // print(extractedData);
+    // // print(extractedData);
 
     final List<myForm> extractedList = [];
-    // print(extractedData.length);
-    // print(2);
+    // // print(extractedData.length);
+    // // print(2);
 
     extractedData.forEach((form) {
       var i = form['author'];
@@ -215,17 +152,17 @@ class FormProvider with ChangeNotifier {
           email: i['email'],
           picture: i['picture']);
 
-      // print(3);
+      // // print(3);
 
       List<int> times = [];
-      // print(form['time']);
+      // // print(form['time']);
       for (int j = 0; j < form['time'].length; j++) {
-        // print();
+        // // print();
         times.add(int.parse(form['time'][j]['hour']));
       }
-      // print(4);
+      // // print(4);
       // print(form['name']);
-      // print(times.length);
+      // // print(times.length);
 
       extractedList.add(myForm(
           id: form['id'],
@@ -239,12 +176,75 @@ class FormProvider with ChangeNotifier {
           estimated_time: form['estimated_time'],
           duration: form['duration_days'],
           times: times));
-      // print(MediaQuery.of(context));
+      // // print(MediaQuery.of(context));
+    });
+    // _myForms = extractedList;
+    activeFormsList = extractedList;
+    // // print(_myForms);
+    // // print(_myForms.length);
+    notifyListeners();
+  }
+
+  Future<void> fetchAndSetmymyForms() async {
+    // String token = await Provider.of<Profile>(context, listen: false).token;
+    // // print ("asfg");
+    // String formid = fid.toString();
+    var response = await http.get(host + "/user/created-forms/", headers: {
+      "Accept": "application/json",
+      'Content-Type': 'application/json',
+      "Authorization": "Token " + authtoken.toString(),
+    });
+
+    // // print(response.body);
+
+    var extractedData = List<Map<String, dynamic>>.from(
+        jsonDecode(utf8.decode(response.bodyBytes)));
+
+    // // print(extractedData);
+
+    final List<myForm> extractedList = [];
+    // // print(extractedData.length);
+    // // print(2);
+
+    extractedData.forEach((form) {
+      var i = form['author'];
+      Profile tmp_profile = new Profile(
+          id: i['id'],
+          name: i['name'],
+          phone: i['phone'],
+          email: i['email'],
+          picture: i['picture']);
+
+      // // print(3);
+
+      List<int> times = [];
+      // // print(form['time']);
+      for (int j = 0; j < form['time'].length; j++) {
+        // // print();
+        times.add(int.parse(form['time'][j]['hour']));
+      }
+      // // print(4);
+      // // print(form['name']);
+      // // print(times.length);
+
+      extractedList.add(myForm(
+          id: form['id'],
+          name: form['name'],
+          author: tmp_profile,
+          description: form['description'],
+          is_active: form['is_active'],
+          is_private: form['is_private'],
+          is_repeated: form['is_repeated'],
+          created: form['created'],
+          estimated_time: form['estimated_time'],
+          duration: form['duration_days'],
+          times: times));
+      // // print(MediaQuery.of(context));
     });
     // _myForms = extractedList;
     mymyFormsList = extractedList;
-    // print(_myForms);
-    // print(_myForms.length);
+    // // print(_myForms);
+    // // print(_myForms.length);
     notifyListeners();
   }
 
@@ -289,9 +289,9 @@ class FormProvider with ChangeNotifier {
       formInfo["is_repeated"] = true;
     }
 
-    print(formInfo);
+    // print(formInfo);
 
-    print(_singleFormQuestions);
+    // print(_singleFormQuestions);
 
     var response = await http
         .post(host + "/form/create/", body: json.encode(formInfo), headers: {
@@ -300,11 +300,11 @@ class FormProvider with ChangeNotifier {
       "Authorization": "Token " + authtoken.toString(),
     });
 
-    print("here");
-    print(response.body);
+    // print("here");
+    // print(response.body);
 //
 //    if (res1.statusCode == 201){
-//      print("form created");
+//      // print("form created");
 //      var id = json.decode(res1.body)["form_id"].toString();
 
 // # [
@@ -342,12 +342,12 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         });
 
-    print(formQuestionResponse.body);
+    // print(formQuestionResponse.body);
   }
 
   Future<void> submitFormAnswers(
       List<Map<String, dynamic>> userAnswers, int formId) async {
-    print("formId" + formId.toString());
+    // print("formId" + formId.toString());
 
     List<Map<String, dynamic>> formAnswers = [];
 
@@ -375,7 +375,7 @@ class FormProvider with ChangeNotifier {
       }
     });
 
-    print(formAnswers);
+    // print(formAnswers);
 
     final response = await http.post(host + "/form/answer/$formId",
         body: json.encode(formAnswers),
@@ -385,15 +385,15 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         });
 
-    print(response.body);
+    // print(response.body);
   }
 
   Future<void> fetchQuestionQuery(int qid, int ppid, String date) async {
-    // print("formId" + formId.toString());
+    // // print("formId" + formId.toString());
     if (date==DateTime.now().toString().substring(0,10)){
       date = "all";
     }
-    // print(date==DateTime.now().toString().substring(0,10));
+    // // print(date==DateTime.now().toString().substring(0,10));
     final response = await http.post(
         host + "/form/participant/answered-form/$qid/$ppid",
         body: json.encode({
@@ -406,20 +406,20 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         }
     );
-    print(response.body);
+    // print(response.body);
     final extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
     // _formQuestions = extractedData;
     byquesquery = extractedData;
     notifyListeners();
-    // print(extractedData);
-    print("sdfbjsb;snd;bns");
-    print(byquesquery);
+    // // print(extractedData);
+    // print("sdfbjsb;snd;bns");
+    // print(byquesquery);
   }
 
 
   Future<void> fetchFormQuery(int qid, String date) async {
-    // print("formId" + formId.toString());
+    // // print("formId" + formId.toString());
     if (date==DateTime.now().toString().substring(0,10)){
       date = "all";
     }
@@ -435,20 +435,20 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         }
     );
-    print(response.body);
+    // print(response.body);
     final extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
     // _formQuestions = extractedData;
     byquesquery = extractedData;
     notifyListeners();
-    // print(extractedData);
-    print("anbaskjbgksbglasfg");
-    print(byquesquery);
+    // // print(extractedData);
+    // print("anbaskjbgksbglasfg");
+    // print(byquesquery);
   }
 
 
   Future<void> fetchFormParts(int formId) async {
-    print("formId" + formId.toString());
+    // print("formId" + formId.toString());
     final response = await http.get(
         host + "/form/participants/$formId",
         headers: {
@@ -457,15 +457,15 @@ class FormProvider with ChangeNotifier {
           "Authorization": "Token " + authtoken.toString(),
         }
     );
-    print(response.body);
+    // print(response.body);
     final extractedData = List<Map<String, dynamic>>.from(
         jsonDecode(utf8.decode(response.bodyBytes)));
     _formQuestions = extractedData;
     formQuestions = extractedData;
     notifyListeners();
-    print(extractedData);
-    print("sdfbjsb;snd;bns");
-    print(formQuestions);
+    // print(extractedData);
+    // print("sdfbjsb;snd;bns");
+    // print(formQuestions);
   }
 
   Future<bool> removeMyForm(int formId) async {
@@ -475,7 +475,7 @@ class FormProvider with ChangeNotifier {
           'Content-Type': 'application/json',
           "Authorization": "Token " + authtoken.toString(),
         });
-    print("removing participating");
+    // print("removing participating");
     if (json.decode(response.body)["msg"] == "ok") {return true;} else {return false;}
   }
 }

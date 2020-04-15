@@ -9,7 +9,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import '../widgets/errorDialog.dart';
 
-
 class RecentFormsScreen extends StatefulWidget {
   static final routeName = "/recent";
 
@@ -19,22 +18,76 @@ class RecentFormsScreen extends StatefulWidget {
 
 class _RecentFormsScreenState extends State<RecentFormsScreen> {
 
+   Future selectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RecentForms()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final form = Provider.of<FormProvider>(context, listen: false);
     return FutureBuilder(
-        future: form
-            .fetchAndSetmyForms(),
-        builder: (_, snapshot) => RefreshIndicator(
-              onRefresh: form
-                  .fetchAndSetmyForms,
-              child: snapshot.connectionState == ConnectionState.waiting
-                  ? Scaffold(
-                      body: Center(child: CircularProgressIndicator()),
-                    )
-                  : snapshot.hasError ? ErrorDialog(message: servermsg, ctx: context)
-                  : RecentForms()
-            ));
+      future: Provider.of<FormProvider>(context, listen: false)
+          .fetchAndSetActiveForms(),
+      builder: (_, snapshot) {
+        List times = [];
+
+        activeFormsList.forEach((element) {
+          element.times.forEach((t) {
+            print(t);
+            times.add([element.name, Time(t, 0, 0)]);
+          });
+        });
+
+        var initializationSettingsAndroid =
+            AndroidInitializationSettings('app_icon');
+        var initializationSettingsIOS = IOSInitializationSettings();
+        var initializationSettings = InitializationSettings(
+            initializationSettingsAndroid, initializationSettingsIOS);
+
+        FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+            new FlutterLocalNotificationsPlugin();
+
+        flutterLocalNotificationsPlugin.initialize(initializationSettings,
+            onSelectNotification: selectNotification);
+//    var time = Time(19, 03, 0);
+        var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+            'repeatDailyAtTime channel id',
+            'repeatDailyAtTime channel name',
+            'repeatDailyAtTime description');
+        var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+
+        var platformChannelSpecifics = NotificationDetails(
+            androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+
+        flutterLocalNotificationsPlugin.cancelAll();
+
+        times.forEach((o) {
+          flutterLocalNotificationsPlugin.showDailyAtTime(
+              times.indexOf(o),
+              o[0],
+              'شما فرمی برای پر کردن دارید.',
+              o[1],
+              platformChannelSpecifics);
+        });
+        return FutureBuilder(
+            future: form.fetchAndSetmyForms(),
+            builder: (_, snapshot) => RefreshIndicator(
+                onRefresh: form.fetchAndSetmyForms,
+                child: snapshot.connectionState == ConnectionState.waiting
+                    ? Scaffold(
+                        body: Center(child: CircularProgressIndicator()),
+                      )
+                    : snapshot.hasError
+                        ? ErrorDialog(message: servermsg, ctx: context)
+                        : RecentForms()));
+      },
+    );
   }
 }
 
@@ -43,50 +96,25 @@ class RecentForms extends StatefulWidget {
   _RecentFormsState createState() => _RecentFormsState();
 }
 
-class _RecentFormsState extends State<RecentForms> with TickerProviderStateMixin {
+class _RecentFormsState extends State<RecentForms>
+    with TickerProviderStateMixin {
   List<myForm> ic;
-
 
   AnimationController controller;
   Animation<double> animation;
 
   @override
   void initState() {
+    // FutureBuilder(
+    //   future: Provider.of<FormProvider>(context, listen: false)
+    //       .fetchAndSetActiveForms(),
+    //   builder: (_, snapshot) {
+        
+    //     return Container();
+    //   },
+    // );
     // TODO: implement initState
 // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-    List times = [
-      Time(22, 3, 0),
-      Time(22, 4, 0),
-      Time(22, 5, 0),
-    ];
-
-    var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings();
-    var initializationSettings = InitializationSettings(
-        initializationSettingsAndroid, initializationSettingsIOS);
-
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
-//    var time = Time(19, 03, 0);
-    var androidPlatformChannelSpecifics =
-    AndroidNotificationDetails('repeatDailyAtTime channel id',
-        'repeatDailyAtTime channel name', 'repeatDailyAtTime description');
-    var iOSPlatformChannelSpecifics =
-    IOSNotificationDetails();
-
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-
-    times.forEach((time) {
-      flutterLocalNotificationsPlugin.showDailyAtTime(
-          times.indexOf(time),
-          'show daily title',
-          'Daily notification1 shown at approximately}',
-          time,
-          platformChannelSpecifics);
-    });
 
     super.initState();
 
@@ -103,23 +131,14 @@ class _RecentFormsState extends State<RecentForms> with TickerProviderStateMixin
     });*/
 
     controller.forward();
-
   }
 
-  Future selectNotification(String payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-    await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => RecentForms()),
-    );
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MainDrawer(),
+        drawer: MainDrawer(),
         appBar: AppBar(
           elevation: 5,
           title: Text("Recent Forms"),
@@ -132,15 +151,15 @@ class _RecentFormsState extends State<RecentForms> with TickerProviderStateMixin
               return Container(
 //                color: Colors.white,
                 child: FadeTransition(
-                  opacity: animation,
-                  alwaysIncludeSemantics: true,
-                  child: FormItem(form: myFormsList[index],)
-                ),
+                    opacity: animation,
+                    alwaysIncludeSemantics: true,
+                    child: FormItem(
+                      form: myFormsList[index],
+                    )),
               );
             },
             itemCount: myFormsList.length,
           ),
-        )
-    );
+        ));
   }
 }

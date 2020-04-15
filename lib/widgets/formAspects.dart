@@ -29,6 +29,7 @@ class _FormAspectsState extends State<FormAspects> {
   });
 
   List<String> _times = [
+    '0',
     '1',
     '2',
     '3',
@@ -51,8 +52,7 @@ class _FormAspectsState extends State<FormAspects> {
     '20',
     '21',
     '22',
-    '23',
-    '24'
+    '23'
   ];
 
   List<String> _selectedTimes = [];
